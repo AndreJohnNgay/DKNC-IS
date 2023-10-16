@@ -6,14 +6,14 @@
                 <h1 class="modal-title fs-5" id="updateStockModal{{ $item->id }}Label">Update Stock</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body bg-linen">
                 @foreach($item_batches as $item_batch)
                 @if($item_batch->item_id == $item->id)
                 <form action="{{ route('batch.update', $item_batch->id) }}" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="card mb-3">
-                        <div class="card-header">
+                        <div class="card-header bg-wheat">
                             Update Batch {{ $item_batch->batch_no }}
                         </div>
                         <div class="card-body">
@@ -51,7 +51,7 @@
                             @endif
 
                         </div>
-                        <div class="card-footer d-flex justify-content-end">
+                        <div class="card-footer d-flex justify-content-end bg-wheat">
                             @if(Auth::user()->role == 'owner')
                             <button type="button" class="btn btn-danger ms-2" data-bs-toggle="modal"
                                 data-bs-target="#deleteBatchModal{{ $item_batch->id }}">

@@ -4,8 +4,6 @@
 @include('components.modals.item.updateItemModal')
 @include('components.modals.item.addItemModal')
 @include('components.modals.item.viewItemModal')
-@include('components.modals.batch.viewItemBatchModal')
-
 
 @section('card-header')
 <h3 class="">Items Table</h3>
@@ -34,38 +32,47 @@
                 <th scope="col">Item Name</th>
                 <th scope="col">Stock</th>
                 <th scope="col">Reminder</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
             @foreach ($items as $item)
             <tr>
                 <th scope="row">{{ $item->id }}</th>
-                <td><button type="button" class="btn btn-link" data-bs-toggle="modal"
-                        data-bs-target="#viewItemModal{{ $item->id }}"><span
-                            class="bi bi-eye-fill">{{ $item->item_name }}</span>
-                    </button>
-                </td>
                 <td>
-      
                     <button type="button" class="btn btn-link" data-bs-toggle="modal"
-                        data-bs-target="#viewItemBatchModal{{ $item->id }}"><span
-                            class="bi bi-eye-fill">{{ $item->stock }}</span>
+                        data-bs-target="#viewItemModal{{ $item->id }}">
+                        <span class="bi bi-eye-fill">{{ $item->item_name }}</span>
                     </button>
                 </td>
+                <td>{{ $item->stock }}</td>
                 @if ($item->stock < $item->stock_used_per_day)
-                    <td><button type="button" class="btn btn-danger w-75" disabled>Restock Today</button>
+                    <td>
+                        <button type="button" class="btn btn-danger w-75" disabled>
+                            Restock Today
+                        </button>
                     </td>
                     @elseif ($item->stock >= $item->stock_used_per_day && $item->stock < $item->
                         stock_used_per_day * 2)
-                        <td><button type="button" class="btn btn-warning w-75" disabled>Restock
-                                Tomorrow</button></td>
+                        <td>
+                            <button type="button" class="btn btn-warning w-75" disabled>
+                                Restock Tomorrow
+                            </button>
+                        </td>
                         @elseif ($item->stock >= $item->stock_used_per_day * 2)
-                        <td><button type="button" class="btn btn-success w-75" disabled>Restock in
-                                {{ ceil($item->stock / $item->stock_used_per_day) }} days</button></td>
-
+                        <td><button type="button" class="btn btn-success w-75" disabled>
+                                Restock in {{ ceil($item->stock / $item->stock_used_per_day) }} days
+                            </button>
+                        </td>
 
                         @endif
-
+                        @include('components.modals.batch.updateStockModal')
+                        <td>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#updateStockModal{{ $item->id }}"><span
+                                    class="bi bi-plus-slash-minus"></span> Stock
+                            </button>
+                        </td>
             <tr>
                 @endforeach
         </tbody>
