@@ -66,13 +66,7 @@
                             class="bi bi-eye-fill">{{ $item->item_name }}</span>
                     </button>
                 </td>
-                <td>
-                    @include('components.modals.batch.viewItemBatchModal')
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal"
-                        data-bs-target="#viewItemBatchModal{{ $item->id }}"><span
-                            class="bi bi-eye-fill">{{ $item->stock }}</span>
-                    </button>
-                </td>
+                <td>{{ $item->stock }}</td>
                 @if ($item->stock < $item->stock_used_per_day)
                     <td><button type="button" class="btn btn-danger w-75" disabled>Restock Today</button>
                     </td>
@@ -90,6 +84,10 @@
                         <td>
                             <div class="d-flex">
                                 @include('components.modals.batch.updateStockModal')
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#updateStockModal{{ $item->id }}">
+                                    <span class="bi bi-plus-slash-minus"></span> Stock
+                                </button>
 
                                 <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
                                     data-bs-target="#updateItemModal{{ $item->id }}">
