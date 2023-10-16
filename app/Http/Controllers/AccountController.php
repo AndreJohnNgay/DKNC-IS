@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\ItemController;
 
 
 class AccountController extends Controller
@@ -34,7 +35,7 @@ class AccountController extends Controller
             
             return view('owner.accounts', compact('users'));
         } elseif ($role === 'employee') {
-            
+            return view('employee.items');
         }
         return view('auth.login');
     }
@@ -113,12 +114,20 @@ class AccountController extends Controller
             'address' => 'nullable|string|max:255',
             'contact_number' => 'nullable|string|max:12',
             'emergency_contact' => 'nullable|string|max:12',
+            'email' => 'nullable|email|max:255',
         ]);
         
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('account.index')->with('success', 'Account updated successfully.');
+        if(Auth::user()->role == 'owner') {
+            return redirect()->route('account.index')->with('success', 'Account updated successfully.');
+        }
+        elseif(Auth::user()->role == 'employee') {
+            return redirect()->route('item.index')->with('success', 'Account updated successfully.');
+        }
     }
+        
+    
     
     public function updatePassword(Request $request, string $id)
     {

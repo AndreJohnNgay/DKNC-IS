@@ -43,6 +43,7 @@ Route::resource('batch', ItemBatchController::class);
 Route::put('item/{item}/update-stock', [ItemController::class, 'updateStock'])
     ->name('item.updateStock');
 
+    Route::resource('account', AccountController::class);
 Route::put('account/{account}/update-password', [AccountController::class, 'updatePassword'])
     ->name('account.updatePassword');
 
@@ -54,5 +55,5 @@ Route::group(['middleware' => 'is_owner'], function () {
     Route::resource('category', CategoryController::class);
     Route::resource('unit', UnitController::class);
     Route::resource('type', TypeController::class);
-    Route::resource('account', AccountController::class);
+    
 });

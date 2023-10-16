@@ -19,7 +19,6 @@
             </div>
         </div>
 
-
         <div class="form-group mb-3">
             <label for="address" class="form-label">Address</label>
             <input type="text" class="form-control" id="address" name="address" value="{{ Auth::user()->address }}">
@@ -42,10 +41,8 @@
                 value="{{ Auth::user()->emergency_contact }}">
         </div>
     </div>
+
     <div class="card-footer d-flex justify-content-end">
-
-        <button type="submit" class="btn btn-success"><span class="bi bi-pencil-square"></span>
-            Save changes</button>
-
+        <button type="submit" class="btn btn-success"><span class="bi bi-pencil-square"></span> Save changes</button>
     </div>
 </div>
