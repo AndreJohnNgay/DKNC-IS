@@ -5,16 +5,13 @@
 @include('components.modals.item.viewItemHistoryModal')
 @include('components.modals.item.addItemModal')
 @include('components.modals.item.deleteItemModal')
-@include('components.modals.item.viewItemModal')
-@include('components.modals.batch.addBatchModal')
-
 
 @section('card-header')
 <h3 class="">Items Table</h3>
 @endsection
 
 @section('search-bar')
-<div class="col-md-6">
+<div class="col-md-8">
     <form action="{{ route('item.index') }}" method="GET" class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search by item name" aria-label="Search" id="query"
             name="query">
@@ -32,11 +29,7 @@
     </button>
 </div>
 
-<div class="col-md-2 mb-2">
-    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addBatchModal">
-        <span class="bi bi-plus-lg"></span> New Batch
-    </button>
-</div>
+
 
 <div class="col-md-2">
     <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#restockModal">
@@ -61,7 +54,9 @@
             @foreach ($items as $item)
             <tr>
                 <th scope="row">{{ $item->id }}</th>
-                <td><button type="button" class="btn btn-link" data-bs-toggle="modal"
+                <td>
+                    @include('components.modals.item.viewItemModal')
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal"
                         data-bs-target="#viewItemModal{{ $item->id }}"><span
                             class="bi bi-eye-fill">{{ $item->item_name }}</span>
                     </button>
@@ -84,11 +79,15 @@
                         <td>
                             <div class="d-flex">
                                 @include('components.modals.batch.updateStockModal')
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-warning ms-2" data-bs-toggle="modal"
                                     data-bs-target="#updateStockModal{{ $item->id }}">
                                     <span class="bi bi-plus-slash-minus"></span> Stock
                                 </button>
-
+                                @include('components.modals.batch.addBatchModal')
+                                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+                                    data-bs-target="#addBatchModal{{ $item->id }}">
+                                    <span class="bi bi-plus-lg"></span> New Batch
+                                </button>
                                 <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
                                     data-bs-target="#updateItemModal{{ $item->id }}">
                                     <span class="bi bi-pencil-square"></span> Update

@@ -3,7 +3,6 @@
 @include('components.modals.item.deleteItemModal')
 @include('components.modals.item.updateItemModal')
 @include('components.modals.item.addItemModal')
-@include('components.modals.item.viewItemModal')
 
 @section('card-header')
 <h3 class="">Items Table</h3>
@@ -40,6 +39,7 @@
             <tr>
                 <th scope="row">{{ $item->id }}</th>
                 <td>
+                    @include('components.modals.item.viewItemModal')
                     <button type="button" class="btn btn-link" data-bs-toggle="modal"
                         data-bs-target="#viewItemModal{{ $item->id }}">
                         <span class="bi bi-eye-fill">{{ $item->item_name }}</span>
