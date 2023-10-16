@@ -15,20 +15,18 @@ class UnitController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         if (!Auth::check()) {
             return view('auth.login');
         }
 
-        $role = Auth::user()->role;
-        $query = $request->input('query');
-        
-        if ($role === 'owner') {
-            $units = Unit::where('unit_name', 'LIKE', "%$query%")->paginate(10);
-            return view('owner.units', compact('units'));
-        } elseif ($role === 'employee') {
-            
+        if($user->role != 'owner') {
+            return redirect()->route('item.index')->with('error', 'You do not have permission to access this page');
         }
-        return view('auth.login');
+
+        $query = $request->input('query');
+        $units = Unit::where('unit_name', 'LIKE', "%$query%")->paginate(10);
+        return view('owner.units', compact('units'));
     }
 
     /**

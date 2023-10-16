@@ -17,27 +17,23 @@ class AccountController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         if (!Auth::check()) {
             return view('auth.login');
         }
 
-        $role = Auth::user()->role;
-        $query = $request->input('query');
-        
-        if ($role === 'owner') {
-            if($query != null) {
-                $users = User::where('first_name', 'LIKE', "%$query%")->orWhere('last_name', 'LIKE', "%$query%")->paginate(10);
-            }
-            else{
-                $users = User::paginate(10);    
-            
-            }
-            
-            return view('owner.accounts', compact('users'));
-        } elseif ($role === 'employee') {
-            return view('employee.items');
+        if($user->role != 'owner') {
+            return redirect()->route('item.index')->with('error', 'You do not have permission to access this page');
         }
-        return view('auth.login');
+
+        $query = $request->input('query');
+        if($query != null) {
+            $users = User::where('first_name', 'LIKE', "%$query%")->orWhere('last_name', 'LIKE', "%$query%")->paginate(10);
+        }
+        else{
+            $users = User::paginate(10);            
+        }
+        return view('owner.accounts', compact('users'));
     }
 
     /**

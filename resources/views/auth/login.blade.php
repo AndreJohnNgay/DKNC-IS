@@ -15,11 +15,13 @@
 
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
+                        
                         <input id="username" type="text"
                             class="form-control @error('username') is-invalid @enderror" name="username"
                             value="{{ old('username') }}" required autocomplete="username" autofocus
                             placeholder="Username">
+                        <label for="username">Username</label>
                         @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -27,10 +29,11 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
                         <input id="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" name="password" required
                             autocomplete="current-password" placeholder="Password">
+                        <label for="password">Password</label>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

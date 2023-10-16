@@ -15,20 +15,18 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         if (!Auth::check()) {
             return view('auth.login');
         }
 
-        $role = Auth::user()->role;
-        $query = $request->input('query');
-        
-        if ($role === 'owner') {
-            $categories = Category::where('category_name', 'LIKE', "%$query%")->paginate(10);
-            return view('owner.categories', compact('categories'));
-        } elseif ($role === 'employee') {
-            
+        if($user->role != 'owner') {
+            return redirect()->route('item.index')->with('error', 'You do not have permission to access this page');
         }
-        return view('auth.login');
+
+        $query = $request->input('query');
+        $categories = Category::where('category_name', 'LIKE', "%$query%")->paginate(10);
+        return view('owner.categories', compact('categories'));
     }
 
     /**

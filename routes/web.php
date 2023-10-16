@@ -25,35 +25,23 @@ use App\Http\Controllers\AccountController;
     // Route::get('item', function () {
     //     return view('employee.item');
     // });
-Route::group(['middleware' => 'is_logged_in'], function () {
-    Route::get('/', function () {
-        return view('auth.login');
-    });
+
+Route::get('/', function () {
+    return view('auth.login');
 });
-
-
 
 Auth::routes();
 
 Route::resource('item', ItemController::class);
 Route::resource('batch', ItemBatchController::class);
 
-// Route::get('/item/search', [ItemController::class, 'search'])->name('item.search');
-
-Route::put('item/{item}/update-stock', [ItemController::class, 'updateStock'])
-    ->name('item.updateStock');
-
-    Route::resource('account', AccountController::class);
+Route::resource('account', AccountController::class);
 Route::put('account/{account}/update-password', [AccountController::class, 'updatePassword'])
     ->name('account.updatePassword');
 
-Route::group(['middleware' => 'is_employee'], function () {
-  
-});
+Route::resource('category', CategoryController::class);
+Route::resource('unit', UnitController::class);
+Route::resource('type', TypeController::class);
 
-Route::group(['middleware' => 'is_owner'], function () {
-    Route::resource('category', CategoryController::class);
-    Route::resource('unit', UnitController::class);
-    Route::resource('type', TypeController::class);
-    
-});
+
+

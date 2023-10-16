@@ -23,9 +23,10 @@
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
                     <!-- Email input -->
-                    <div class="mb-3">
+                    <div class="mb-3 form-floating">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                             name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" autofocus>
+                        <label for="email">Email address</label>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
