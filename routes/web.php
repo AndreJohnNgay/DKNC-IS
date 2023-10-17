@@ -34,10 +34,19 @@ Auth::routes();
 
 Route::resource('item', ItemController::class);
 Route::resource('batch', ItemBatchController::class);
-
 Route::resource('account', AccountController::class);
+
 Route::put('account/{account}/update-password', [AccountController::class, 'updatePassword'])
     ->name('account.updatePassword');
+
+Route::put('account/{account}/reset-password', [AccountController::class, 'resetPassword'])
+    ->name('account.resetPassword');
+
+Route::put('account/{account}/archive-account', [AccountController::class, 'archiveAccount'])
+    ->name('account.archiveAccount');
+
+Route::put('account/{account}/restore-account', [AccountController::class, 'restoreAccount'])
+    ->name('account.restoreAccount');
 
 Route::resource('category', CategoryController::class);
 Route::resource('unit', UnitController::class);

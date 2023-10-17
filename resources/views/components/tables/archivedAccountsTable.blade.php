@@ -10,13 +10,13 @@
                 <th scope="col">Address</th>
                 <th scope="col">Contact Number</th>
                 <th scope="col">Emergency Contact</th>
-                <th scope="col">Email Address</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
             @foreach ($users as $user)
-            @if($user->archived == 0)
+            @if($user->archived == 1)
             <tr>
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->first_name }}</td>
@@ -29,21 +29,13 @@
                 <td>{{ $user->email }}</td>
                 <td>
                     <div class="d-flex">
-                        <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
-                            data-bs-target="#updateAccountModal{{ $user->id }}">
-                            <span class="bi bi-pencil-square"></span> Update
-                        </button>
-                            @include('components.modals.account.resetPasswordModal')
-                            <button type="button" class="btn btn-warning ms-2" data-bs-toggle="modal"
-                            data-bs-target="#resetPasswordModal{{ $user->id }}">
-                            <span class="bi bi-arrow-counterclockwise"> Reset Password</span>
+                        <form action="{{ route('account.restoreAccount', $user->id) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button type="submit" class="btn btn-success ms-2">
+                                <span class="bi bi-recycle"></span> Restore
                             </button>
-
-                        
-                        <button type="button" class="btn btn-danger ms-2" data-bs-toggle="modal"
-                            data-bs-target="#deleteAccountModal{{ $user->id }}"><span class="bi bi-trash3-fill"></span>
-                            Delete
-                        </button>
+                        </form>
                     </div>
                 </td>
             <tr>

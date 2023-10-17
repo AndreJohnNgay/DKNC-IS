@@ -38,17 +38,17 @@
 
                     <div class="form-group mb-3">
                         <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" name="address">
+                        <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="contact_number" class="form-label">Contact Number</label>
-                        <input type="number" class="form-control" id="contact_number" name="contact_number">
+                        <input type="number" class="form-control" id="contact_number" name="contact_number" value="{{ $user->contact_number }}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="emergency_contact" class="form-label">Emergency Contact Number</label>
-                        <input type="number" class="form-control" id="emergency_contact" name="emergency_contact">
+                        <input type="number" class="form-control" id="emergency_contact" name="emergency_contact" value="{{ $user->emergency_contact }}">
                     </div>
                 </div>
 

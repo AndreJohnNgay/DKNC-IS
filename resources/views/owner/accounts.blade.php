@@ -1,6 +1,7 @@
 @extends('layouts.tables_layout')
 @include('components.modals.account.deleteAccountModal')
 @include('components.modals.account.updateAccountModal')
+@include('components.modals.account.archivedAccountListModal')
 @include('components.modals.account.addAccountModal')
 
 @section('card-header')
@@ -8,7 +9,7 @@
 @endsection
 
 @section('search-bar')
-<div class="col-md-10">
+<div class="col-md-8">
     <form class="d-flex" role="search">
         <input action="{{ route('account.index') }}" method="GET" class="form-control me-2" type="search"
             placeholder="Search by firstname or lastname" aria-label="Search" id="query" name="query">
@@ -20,6 +21,13 @@
 @endsection
 
 @section('buttons')
+<div class="col-md-2">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#archivedAccountListModal" class="btn btn-primary w-100">
+        <span class="bi bi-recycle"></span> Restore Account
+    </button>
+</div>
+
+
 <div class="col-md-2">
     <button type="button" data-bs-toggle="modal" data-bs-target="#addAccountModal" class="btn btn-primary w-100">
         <span class="bi bi-plus-lg"></span> Generate Account

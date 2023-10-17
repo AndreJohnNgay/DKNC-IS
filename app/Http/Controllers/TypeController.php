@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTypeRequest;
 use App\Http\Requests\UpdateTypeRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class TypeController extends Controller
 {
@@ -79,6 +80,10 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
+        $item = Item::where('type_id', $type->id)->first();
+        if($item) {
+            return redirect()->route('type.index')->with('error', 'Type cannot be deleted because it is associated with an item');
+        }
         $type->delete();
         return redirect()->route('type.index')->with('success', 'Type deleted successfully');
     }

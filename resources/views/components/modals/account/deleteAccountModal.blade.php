@@ -1,6 +1,6 @@
 @foreach($users as $user)
-<form action="{{ route('account.destroy', $user->id) }}" method="POST">
-    @method('DELETE')
+<form action="{{ route('account.archiveAccount', $user->id) }}" method="POST">
+    @method('PUT')
     @csrf
 <div class="modal fade" id="deleteAccountModal{{ $user->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="deleteAccountModal{{ $user->id }}Label" aria-hidden="true">

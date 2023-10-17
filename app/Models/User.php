@@ -36,7 +36,9 @@ class User extends Authenticatable
         // contact
         'email',
         'contact_number',
-        'emergency_contact'
+        'emergency_contact',
+
+        'archived',
     ];
 
     /**

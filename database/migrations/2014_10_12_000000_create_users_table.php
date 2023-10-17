@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('emergency_contact')->nullable();
 
+            $table->boolean('archived')->default(false);
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
 

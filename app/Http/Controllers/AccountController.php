@@ -31,7 +31,7 @@ class AccountController extends Controller
             $users = User::where('first_name', 'LIKE', "%$query%")->orWhere('last_name', 'LIKE', "%$query%")->paginate(10);
         }
         else{
-            $users = User::paginate(10);            
+            $users = User::paginate(10);          
         }
         return view('owner.accounts', compact('users'));
     }
@@ -122,6 +122,16 @@ class AccountController extends Controller
             return redirect()->route('item.index')->with('success', 'Account updated successfully.');
         }
     }
+
+    public function resetPassword(string $id)
+    {
+        $user = User::findOrFail($id);
+        $password = Str::random(8);
+        $user->update([
+            'password' => Hash::make($password),
+        ]);
+        return redirect()->route('account.index')->with('success', 'Password reset successfully. New password: ' . $password);
+    }
         
     
     
@@ -145,6 +155,25 @@ class AccountController extends Controller
         }
     }
 
+    public function archiveAccount(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'archived' => true,
+        ]);
+        return redirect()->route('account.index')->with('success', 'Account deleted successfully.');
+    }
+
+    public function restoreAccount(string $id)
+    {
+        $user = User::findOrFail($id);
+    
+        $user->update([
+            'archived' => false,
+        ]);
+
+        return redirect()->route('account.index')->with('success', 'Account restored successfully');
+    }
     /**
      * Remove the specified resource from storage.
      */

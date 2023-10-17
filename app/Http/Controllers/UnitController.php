@@ -7,7 +7,7 @@ use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Models\Item;
 class UnitController extends Controller
 {
     /**
@@ -81,6 +81,10 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
+        $item = Item::where('unit_id', $unit->id)->first();
+        if($item) {
+            return redirect()->route('unit.index')->with('error', 'Unit "'. $unit->unit_name .'" cannot be deleted because it is associated with an item');
+        }
         $unit->delete();
         return redirect()->route('unit.index')->with('success', 'Unit deleted successfully');
     }

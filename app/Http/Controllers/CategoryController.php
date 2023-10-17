@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class CategoryController extends Controller
 {
@@ -85,7 +86,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $item = Item::where('category_id', $category->id)->first();
+        if ($item) {
+            return redirect()->route('category.index')->with('error', 'Category "'. $category->category_name .'" cannot be deleted because it is associated with an item');
+        }
+
         $category->delete();
-        return redirect()->route('category.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('category.index')->with('success', 'Category "'. $category->category_name .'" deleted successfully');
     }
 }
