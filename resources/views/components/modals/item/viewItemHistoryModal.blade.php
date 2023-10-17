@@ -14,7 +14,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Updated On</th>
-                                <th scope="col">Updated By</th>
+                                <th scope="col">Actor</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>

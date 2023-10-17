@@ -1,3 +1,4 @@
+@include('components.modals.batch.deleteBatchModal')
 <div class="modal fade" id="updateStockModal{{ $item->id }}" tabindex="-1"
     aria-labelledby="updateStockModal{{ $item->id }}Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -53,6 +54,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-end bg-wheat">
                             @if(Auth::user()->role == 'owner')
+                            
                             <button type="button" class="btn btn-danger ms-2" data-bs-toggle="modal"
                                 data-bs-target="#deleteBatchModal{{ $item_batch->id }}">
                                 <span class="bi bi-trash3-fill"></span> Delete
@@ -60,7 +62,6 @@
                             @endif
                             <button type="submit" class="btn btn-success ms-2"><span class="bi bi-pencil-square"></span>
                                 Save changes</button>
-
                         </div>
 
                     </div>

@@ -42,10 +42,20 @@ class ItemBatchController extends Controller
             'stock' => $request->input('stock'),
             'expiration_date' => $request->input('expiration_date'),
         ]);
+
+        
         $item = Item::where('id', $request->input('item_id'))->firstOrFail();
+        $previous_stock = $item->stock;
         $item->update([
             'stock' => $item->stock + $request->stock,
         ]);
+
+        ItemHistory::create([
+            'item' => $item->id,
+            'updated_by' => Auth::id(),
+            'action' => 'New batch added: "Batch ' . $batch_no . '". Stock increased from ' . $previous_stock . ' to ' . $item->stock,
+        ]);
+
 
         return redirect()->route('item.index')->with('success', 'Batch added successfully');
     }
@@ -130,9 +140,17 @@ class ItemBatchController extends Controller
     {
         $itemBatch = ItemBatch::findOrFail($request->input('item_batch_id'));
         $item = Item::findOrFail($request->input('item_id'));
+        $previous_stock = $item->stock;
 
         $item->update([
             'stock' => $item->stock - $itemBatch->stock,
+        ]);
+
+        
+        ItemHistory::create([
+            'item' => $item->id,
+            'updated_by' => Auth::id(),
+            'action' => 'Batch ' . $itemBatch->batch_no . ' deleted. Stock decreased from ' . $previous_stock . ' to ' . $item->stock,
         ]);
         
         $itemBatch->delete();

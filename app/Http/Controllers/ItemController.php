@@ -89,6 +89,7 @@ class ItemController extends Controller
             'created_by' => $user->id
         ]);
 
+
         return redirect()->route('item.index')->with('success', 'Item added successfully');
     }
 
